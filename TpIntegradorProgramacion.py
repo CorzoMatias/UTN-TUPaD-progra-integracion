@@ -60,25 +60,35 @@ def buscar_estudiante_por_nombre(lista, nombre_buscado):
 # ---------- Programa principal ----------
 if __name__ == "__main__":
     print("📋 Bienvenido al sistema de gestión de estudiantes")
+    estudiantes = []
+    opcion = 0
+    while opcion != '4':
+        print("\nAcciones disponibles:")
+        print("1. Cargar estudiantes")
+        print("2. Ordenar estudiantes por nota")
+        print("3. Buscar estudiante por nombre")
+        print("4. Salir")
+        opcion = input("Ingrese su opción: ")
+        print("---------------------------------")
+        if opcion == '1':
+            estudiantes = cargar_estudiantes()
+            print("\n📚 Listado original de estudiantes:")
+            for est in estudiantes:
+                print(f"{est['nombre']} - Nota: {est['nota']}")
+        elif opcion == '2':
+            # Ordenar por nota
+            bubble_sort_por_nota(estudiantes)
+            print("\n📊 Estudiantes ordenados por nota (de menor a mayor):")
+            for est in estudiantes:
+                print(f"{est['nombre']} - Nota: {est['nota']}")
+        elif opcion == '3':
+            # Buscar estudiante
+            nombre_buscado = input("\n🔍 Ingrese el nombre del estudiante que desea buscar: ").strip()
+            resultado = buscar_estudiante_por_nombre(estudiantes, nombre_buscado)
+            print(f"\n🔎 Resultado de búsqueda para '{nombre_buscado}':")
+            if resultado:
+                print(f"✅ Nombre: {resultado['nombre']} - Nota: {resultado['nota']}")
+            else:
+                print("❌ Estudiante no encontrado.")
 
-    estudiantes = cargar_estudiantes()
-
-    print("\n📚 Listado original de estudiantes:")
-    for est in estudiantes:
-        print(f"{est['nombre']} - Nota: {est['nota']}")
-
-    # Ordenar por nota
-    bubble_sort_por_nota(estudiantes)
-    print("\n📊 Estudiantes ordenados por nota (de menor a mayor):")
-    for est in estudiantes:
-        print(f"{est['nombre']} - Nota: {est['nota']}")
-
-    # Buscar estudiante
-    nombre_buscado = input("\n🔍 Ingrese el nombre del estudiante que desea buscar: ").strip()
-    resultado = buscar_estudiante_por_nombre(estudiantes, nombre_buscado)
-
-    print(f"\n🔎 Resultado de búsqueda para '{nombre_buscado}':")
-    if resultado:
-        print(f"✅ Nombre: {resultado['nombre']} - Nota: {resultado['nota']}")
-    else:
-        print("❌ Estudiante no encontrado.")
+    print("Fin del programa!")
