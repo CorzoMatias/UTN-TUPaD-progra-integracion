@@ -1,3 +1,5 @@
+import timeit
+
 # Función para cargar estudiantes desde la consola
 def cargar_estudiantes():
     """
@@ -35,18 +37,31 @@ def cargar_estudiantes():
 
     return estudiantes
 
-# Algoritmo de ordenamiento: Bubble Sort por nota
 def bubble_sort_por_nota(lista):
     """
-    Ordena la lista de estudiantes de menor a mayor nota.
+    Ordena la lista de estudiantes de menor a mayor nota utilizando el algoritmo Bubble Sort.
+    Devuelve una nueva lista ordenada.
     """
     n = len(lista)
     for i in range(n):
         for j in range(0, n - i - 1):
             if lista[j]["nota"] > lista[j + 1]["nota"]:
                 lista[j], lista[j + 1] = lista[j + 1], lista[j]
+    return lista
 
-# Algoritmo de búsqueda lineal por nombre
+def quick_sort_por_nota(lista):
+    """
+    Ordena la lista de estudiantes de menor a mayor nota utilizando el algoritmo Quick Sort.
+    Devuelve una nueva lista ordenada.
+    """
+    if len(lista) <= 1:
+        return lista
+    else:
+        pivote = lista[0]
+        menores = [x for x in lista[1:] if x["nota"] <= pivote["nota"]]
+        mayores = [x for x in lista[1:] if x["nota"] > pivote["nota"]]
+        return quick_sort_por_nota(menores) + [pivote] + quick_sort_por_nota(mayores)
+
 def buscar_estudiante_por_nombre(lista, nombre_buscado):
     """
     Busca un estudiante por su nombre usando búsqueda lineal.
@@ -60,7 +75,19 @@ def buscar_estudiante_por_nombre(lista, nombre_buscado):
 # ---------- Programa principal ----------
 if __name__ == "__main__":
     print("📋 Bienvenido al sistema de gestión de estudiantes")
-    estudiantes = []
+    estudiantes = [
+        {"nombre": "Paula", "nota": 8}, 
+        {"nombre": "Pedro", "nota": 5.5}, 
+        {"nombre": "Carlos", "nota": 3}, 
+        {"nombre": "Juan", "nota": 10},
+        {"nombre": "Andrea", "nota": 1},
+        {"nombre": "Roberto", "nota": 4},
+        {"nombre": "Matías", "nota": 6},
+        {"nombre": "Ana", "nota": 2},
+        {"nombre": "Lucas", "nota": 5},
+        {"nombre": "Martín", "nota": 1.5},
+        {"nombre": "Sol", "nota": 7}
+    ]
     opcion = 0
     while opcion != '4':
         print("\nAcciones disponibles:")
@@ -76,10 +103,23 @@ if __name__ == "__main__":
             for est in estudiantes:
                 print(f"{est['nombre']} - Nota: {est['nota']}")
         elif opcion == '2':
-            # Ordenar por nota
-            bubble_sort_por_nota(estudiantes)
-            print("\n📊 Estudiantes ordenados por nota (de menor a mayor):")
-            for est in estudiantes:
+            # Ejecutamos los algoritmos de ordenamiento y medimos el tiempo que demora cada uno
+            start_time = timeit.default_timer()
+            resultado_bubblesort = bubble_sort_por_nota(estudiantes.copy())
+            end_time = timeit.default_timer()
+            print("Tiempo Bubble Sort:", end_time - start_time, " segundos")
+    
+            start_time = timeit.default_timer()
+            resultado_quicksort = quick_sort_por_nota(estudiantes.copy())
+            end_time = timeit.default_timer()
+            print("Tiempo Quick Sort:", end_time - start_time, " segundos")
+
+            print("\n📊 Estudiantes ordenados por nota (de menor a mayor) - Bubble Sort:")
+            for est in resultado_bubblesort:
+                print(f"{est['nombre']} - Nota: {est['nota']}")
+
+            print("\n📊 Estudiantes ordenados por nota (de menor a mayor) - Quick Sort:")
+            for est in resultado_quicksort:
                 print(f"{est['nombre']} - Nota: {est['nota']}")
         elif opcion == '3':
             # Buscar estudiante
