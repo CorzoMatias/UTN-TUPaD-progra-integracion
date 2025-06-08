@@ -12,7 +12,7 @@ Elegimos el tema de algoritmos de ordenamiento y búsqueda.
 Presentar una aplicación que haga un uso práctico de los temas expuestos aplicándolos a un problema real.
 
 ## Video
-[Video de presentación en YouTube](youtube.com) # TODO actualizar link cuando esté subido
+[Video de presentación en YouTube](https://youtu.be/2juKT8UWmGw)
 
 ## Ejecución del proyecto
 Como prerequisito es necesario tener python instalado.
